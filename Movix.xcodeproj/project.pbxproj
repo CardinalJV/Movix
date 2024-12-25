@@ -6,14 +6,18 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A7E121EA2D147CD000D79BC7 /* TMDb in Frameworks */ = {isa = PBXBuildFile; productRef = A7E121E92D147CD000D79BC7 /* TMDb */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A7E9DD052D105FA600E04FE4 /* Movix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A7E9DD072D105FA600E04FE4 /* Movix */ = {
+		A7E9DD072D105FA600E04FE4 /* Sources */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Movix;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A7E121EA2D147CD000D79BC7 /* TMDb in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -32,7 +37,7 @@
 		A7E9DCFC2D105FA600E04FE4 = {
 			isa = PBXGroup;
 			children = (
-				A7E9DD072D105FA600E04FE4 /* Movix */,
+				A7E9DD072D105FA600E04FE4 /* Sources */,
 				A7E9DD062D105FA600E04FE4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,10 +66,11 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A7E9DD072D105FA600E04FE4 /* Movix */,
+				A7E9DD072D105FA600E04FE4 /* Sources */,
 			);
 			name = Movix;
 			packageProductDependencies = (
+				A7E121E92D147CD000D79BC7 /* TMDb */,
 			);
 			productName = Movix;
 			productReference = A7E9DD052D105FA600E04FE4 /* Movix.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = A7E9DCFC2D105FA600E04FE4;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A7E121E82D147CD000D79BC7 /* XCRemoteSwiftPackageReference "TMDb" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A7E9DD062D105FA600E04FE4 /* Products */;
 			projectDirPath = "";
@@ -251,7 +260,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Movix/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				DEVELOPMENT_TEAM = 5YH873AVKF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -260,6 +269,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -280,7 +290,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Movix/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				DEVELOPMENT_TEAM = 5YH873AVKF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -289,6 +299,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,6 +335,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A7E121E82D147CD000D79BC7 /* XCRemoteSwiftPackageReference "TMDb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adamayoung/TMDb.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A7E121E92D147CD000D79BC7 /* TMDb */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A7E121E82D147CD000D79BC7 /* XCRemoteSwiftPackageReference "TMDb" */;
+			productName = TMDb;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A7E9DCFD2D105FA600E04FE4 /* Project object */;
 }
