@@ -13,15 +13,18 @@ class MoviesController {
   
   var moviesListsItems: [MovieListItem] = []
   var genres: [Genre] = []
+  var posters: [URL] = []
 //  var selectedGenre: Genre? = nil
 //  var selectedMovie: Movie? = nil
   
   let apiKey = "b5d8017e240d54c376f083183218e549"
-  let tmdbClient = TMDbClient(apiKey: "b5d8017e240d54c376f083183218e549")
+  let client = TMDbClient(apiKey: "b5d8017e240d54c376f083183218e549")
+  
+//  tmdbClient.movies.
   
   func fetchMoviesListsItems(page: Int) async {
     do {
-      self.moviesListsItems = try await tmdbClient.discover.movies(page: page).results
+      self.moviesListsItems = try await client.discover.movies(page: page).results
     } catch {
       print("Error during fetching moviesListsItems: \(error.localizedDescription)")
     }
@@ -29,7 +32,7 @@ class MoviesController {
   
   func fetchMovie(byId id: Int) async -> Movie? {
     do {
-      let movie = try await self.tmdbClient.movies.details(forMovie: id, language: "fr")
+      let movie = try await self.client.movies.details(forMovie: id, language: "fr")
       return movie
     } catch{
       print(error)
@@ -37,11 +40,28 @@ class MoviesController {
     }
   }
   
+  func fetchPopularMovies() async -> [MovieListItem]? {
+    do {
+      return try await self.client.movies.popular(page: 1, language: "en").results
+    } catch {
+      print("Error during fetching popular movies: \(error.localizedDescription)")
+      return nil
+    }
+  }
+  
   func fetchMoviesGenres() async {
     do {
-      self.genres = try await tmdbClient.genres.movieGenres(language: "fr")
+      self.genres = try await client.genres.movieGenres(language: "fr")
     } catch {
       print("Error during fetching movies genre: \(error.localizedDescription)")
+    }
+  }
+  
+  func getPostersForLandingView() {
+    for item in self.moviesListsItems {
+      if let posterPath = item.posterPath {
+        self.posters.append(posterPath)
+      }
     }
   }
   
