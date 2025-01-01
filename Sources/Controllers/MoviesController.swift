@@ -32,8 +32,7 @@ class MoviesController {
   
   func fetchMovie(byId id: Int) async -> Movie? {
     do {
-      let movie = try await self.client.movies.details(forMovie: id, language: "fr")
-      return movie
+      return try await self.client.movies.details(forMovie: id, language: "fr")
     } catch{
       print(error)
       return nil
