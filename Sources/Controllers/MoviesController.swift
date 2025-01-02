@@ -14,17 +14,14 @@ class MoviesController {
   var moviesListsItems: [MovieListItem] = []
   var genres: [Genre] = []
   var posters: [URL] = []
-//  var selectedGenre: Genre? = nil
-//  var selectedMovie: Movie? = nil
   
   let apiKey = "b5d8017e240d54c376f083183218e549"
   let client = TMDbClient(apiKey: "b5d8017e240d54c376f083183218e549")
   
-//  tmdbClient.movies.
-  
   func fetchMoviesListsItems(page: Int) async {
     do {
       self.moviesListsItems = try await client.discover.movies(page: page).results
+      self.getPostersForLandingView()
     } catch {
       print("Error during fetching moviesListsItems: \(error.localizedDescription)")
     }
@@ -56,7 +53,7 @@ class MoviesController {
     }
   }
   
-  func getPostersForLandingView() {
+  private func getPostersForLandingView() {
     for item in self.moviesListsItems {
       if let posterPath = item.posterPath {
         self.posters.append(posterPath)
