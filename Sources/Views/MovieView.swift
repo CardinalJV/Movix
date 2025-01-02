@@ -18,7 +18,8 @@ struct MovieView: View {
   let id: Int
   
   var body: some View {
-    VStack{
+      VStack{
+        ScrollView{
         if let movie = self.movie {
           ImageLoader(imageUrl: movie.backdropPath)
             .scaledToFit()
@@ -27,16 +28,16 @@ struct MovieView: View {
                 Button {
                   dismiss()
                 } label: {
-                    Image(systemName: "xmark")
-                      .padding(8)
-                      .font(.title3)
-                      .bold()
-                      .foregroundStyle(.white)
-                      .background(Color(red: 40/250, green: 40/250, blue: 40/250), in: Circle())
+                  Image(systemName: "xmark")
+                    .padding(8)
+                    .font(.title3)
+                    .bold()
+                    .foregroundStyle(.white)
+                    .background(Color(red: 40/250, green: 40/250, blue: 40/250), in: Circle())
                 }
                 Spacer()
               }
-              .padding()
+              .padding(.init(top: 15, leading: 25, bottom: 0, trailing: 0))
               .frame(width: 425, height: 226, alignment: .top)
               .background(Color.black.opacity(0.5))
             }
@@ -55,15 +56,16 @@ struct MovieView: View {
           .offset(y: -125)
           Spacer()
         }
-    }
-    .background(content: {
-      Color(red: 40/250, green: 40/250, blue: 40/250)
-        .ignoresSafeArea(.all)
-    })
-    .navigationBarBackButtonHidden(true)
-    .task {
-      if let movie = await moviesController.fetchMovie(byId: self.id) {
-        self.movie = movie
+      }
+      .background(content: {
+        Color(red: 40/250, green: 40/250, blue: 40/250)
+          .ignoresSafeArea(.all)
+      })
+      .navigationBarBackButtonHidden(true)
+      .task {
+        if let movie = await moviesController.fetchMovie(byId: self.id) {
+          self.movie = movie
+        }
       }
     }
   }
