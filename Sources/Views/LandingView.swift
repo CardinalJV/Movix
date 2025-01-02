@@ -13,6 +13,17 @@ struct ContentView: View {
   @Environment(MoviesController.self) private var moviesController
   
   @State private var index: Int = 0
+  @State private var isPresented = false
+  
+  private func runCarroussel() {
+    Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true) { _ in
+      if self.index < moviesController.posters.count - 1 {
+        self.index += 1
+      } else {
+        self.index = 0
+      }
+    }
+  }
   
   var body: some View {
     NavigationStack{
@@ -57,6 +68,7 @@ struct ContentView: View {
                           Image(systemName: "magnifyingglass")
                         }
                         .frame(width: 350, height: 50)
+                        .bold()
                         .background(Color(red: 40/250, green: 40/250, blue: 40/250).opacity(0.75), in: RoundedRectangle(cornerRadius: 5))
                       }
                       Button {
@@ -67,6 +79,7 @@ struct ContentView: View {
                           Image(systemName: "star")
                         }
                         .frame(width: 350, height: 50)
+                        .bold()
                         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5))
                       }
                     }
@@ -91,7 +104,6 @@ struct ContentView: View {
                 Image(systemName: "popcorn")
                   .font(.title3)
                   .foregroundStyle(.red)
-//                  .symbolEffect(.pulse)
                 Text("Mov")
                   .foregroundStyle(.red)
               }
@@ -113,19 +125,19 @@ struct ContentView: View {
             }
           }
         }
+        .toolbarBackground(.black, for: .automatic)
         /* - */
         .onAppear{
-          Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true) { _ in
-            if self.index < moviesController.posters.count - 1 {
-              self.index += 1
-            } else {
-              self.index = 0
-            }
+          self.isPresented.toggle()
+          if self.isPresented {
+            self.runCarroussel()
           }
         } // Dynamique carroussel background
+        .onDisappear{
+          self.isPresented.toggle()
+        }
         .task {
           await moviesController.fetchMoviesListsItems(page: 1)
-          moviesController.getPostersForLandingView()
         } // Add posters path in an array for more optimisations
       }
     }
