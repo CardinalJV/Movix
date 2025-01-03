@@ -23,8 +23,9 @@ struct MovieView: View {
         if let movie = self.movie {
           ImageLoader(imageUrl: movie.backdropPath)
             .scaledToFit()
-            .overlay{
-              HStack{
+            .opacity(0.75)
+            .overlay(alignment: .topLeading){
+              VStack{
                 Button {
                   dismiss()
                 } label: {
@@ -37,9 +38,7 @@ struct MovieView: View {
                 }
                 Spacer()
               }
-              .padding(.init(top: 15, leading: 25, bottom: 0, trailing: 0))
-              .frame(width: 425, height: 226, alignment: .top)
-              .background(Color.black.opacity(0.5))
+              .padding(10)
             }
           VStack{
             ImageLoader(imageUrl: movie.posterPath)
@@ -47,10 +46,12 @@ struct MovieView: View {
               .frame(width: 200)
               .clipShape(RoundedRectangle(cornerRadius: 5))
               .zIndex(1)
+              .shadow(radius: 10)
             Text(movie.title)
               .font(.title)
               .bold()
               .foregroundStyle(.white)
+              .multilineTextAlignment(.center)
           }
           .frame(width: 350)
           .offset(y: -125)
