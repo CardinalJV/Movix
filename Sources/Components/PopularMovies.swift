@@ -47,7 +47,7 @@ struct PopularMovies: View {
                   .frame(height: 250)
                   .clipShape(RoundedRectangle(cornerRadius: 5))
               }
-              .transition(.slide)
+              .animation(.bouncy, value: self.showAllMovies)
             }
 
           }
