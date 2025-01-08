@@ -52,6 +52,7 @@ struct PopularMovies: View {
 
           }
         }
+        // Show more/less
         Button {
           self.showAllMovies.toggle()
         } label: {
