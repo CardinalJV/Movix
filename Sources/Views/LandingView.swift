@@ -13,16 +13,16 @@ struct ContentView: View {
   @Environment(MoviesController.self) private var moviesController
   
   @State private var index: Int = 0
-  @State private var isPresented = false
+  @State private var timer: Timer? = nil
   
-  private func runCarroussel() {
-    Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true) { _ in
-      if self.index < moviesController.posters.count - 1 {
-        self.index += 1
-      } else {
-        self.index = 0
-      }
+  private func startCarroussel() {
+    self.timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { _ in
+      self.index = (self.index + 1) % moviesController.posters.count
     }
+  }
+  
+  private func stopCaroussel() {
+    self.timer?.invalidate()
   }
   
   var body: some View {
@@ -128,17 +128,14 @@ struct ContentView: View {
         .toolbarBackground(.black, for: .automatic)
         /* - */
         .onAppear{
-          self.isPresented.toggle()
-          if self.isPresented {
-            self.runCarroussel()
-          }
-        } // Dynamique carroussel background
+          self.startCarroussel()
+        }
         .onDisappear{
-          self.isPresented.toggle()
+          self.stopCaroussel()
         }
         .task {
           await moviesController.fetchMoviesListsItems(page: 1)
-        } // Add posters path in an array for more optimisations
+        }
       }
     }
   }
