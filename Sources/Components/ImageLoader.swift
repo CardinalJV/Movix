@@ -31,6 +31,7 @@ struct ImageLoader: View {
       }
     } else {
       Image(systemName: "xmark")
+        .foregroundStyle(.gray)
     }
   }
 }
