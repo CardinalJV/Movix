@@ -15,8 +15,8 @@ class MoviesController {
   var genres: [Genre] = []
   var posters: [URL] = []
   
-  let apiKey = "b5d8017e240d54c376f083183218e549"
-  let client = TMDbClient(apiKey: "b5d8017e240d54c376f083183218e549")
+  private let apiKey = "b5d8017e240d54c376f083183218e549"
+  private let client = TMDbClient(apiKey: "b5d8017e240d54c376f083183218e549")
   
   func fetchMoviesListsItems(page: Int) async {
     do {
