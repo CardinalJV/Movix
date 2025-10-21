@@ -8,32 +8,33 @@
 import SwiftUI
 
 struct ImageLoader: View {
-  
-  let imageUrl: URL?
-  
-  var body: some View {
-    if self.imageUrl != nil {
-      AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/" + self.imageUrl!.relativeString)) { phase in
-        switch phase {
-          case .empty:
-            ProgressView()
-          case .success(let image):
-            image
-              .resizable()
-          case .failure:
-            VStack{
-              Text("Erreur lors du chargement de l'image")
-              Image(systemName: "xmark.circle")
+    
+    let imageUrl: URL?
+    
+    var body: some View {
+        if self.imageUrl != nil {
+            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/" + self.imageUrl!.relativeString)) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                case .failure:
+                    VStack{
+                        Text("Erreur lors du chargement de l'image")
+                        Image(systemName: "xmark.circle")
+                    }
+                @unknown default:
+                    EmptyView()
+                }
             }
-          @unknown default:
-            EmptyView()
+        } else {
+            Image(systemName: "xmark")
+                .foregroundStyle(.gray)
         }
-      }
-    } else {
-      Image(systemName: "xmark")
-        .foregroundStyle(.gray)
     }
-  }
 }
 //
 //#Preview {
