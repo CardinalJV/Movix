@@ -60,6 +60,15 @@ class MoviesController {
       }
     }
   }
+    
+    func fetchTopRatedMovies() async -> [MovieListItem]? {
+        do {
+            return try await self.client.movies.topRated(page: 1, country: "EN", language: "en").results
+        } catch {
+            print("Error during fetching top rated movies: \(error.localizedDescription)")
+            return nil
+        }
+    }
   
 //  func sortByGenre() -> [MovieListItem]? {
 //    guard self.selectedGenre != nil else {
