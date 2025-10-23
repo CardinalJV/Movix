@@ -73,7 +73,7 @@ struct ContentView: View {
                                             }
 //                                            NavigationLink(destination: {
 //                                                
-//                                            }, label: <#T##() -> View#>) {
+//                                            }, label: ) {
 //                                                
 //                                            } label: {
 //                                                HStack{
