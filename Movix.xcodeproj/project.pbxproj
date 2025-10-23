@@ -11,7 +11,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		52ABEF5E2EA2D79800964327 /* Movix-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Movix-Info.plist"; sourceTree = "<group>"; };
 		A7E9DD052D105FA600E04FE4 /* Movix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Movix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -38,7 +37,6 @@
 		A7E9DCFC2D105FA600E04FE4 = {
 			isa = PBXGroup;
 			children = (
-				52ABEF5E2EA2D79800964327 /* Movix-Info.plist */,
 				A7E9DD072D105FA600E04FE4 /* Sources */,
 				A7E9DD062D105FA600E04FE4 /* Products */,
 			);
@@ -269,7 +267,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Movix-Info.plist";
+				INFOPLIST_FILE = "$(INFOPLIST_FILE)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -299,7 +297,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Sources/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Movix-Info.plist";
+				INFOPLIST_FILE = "$(INFOPLIST_FILE)";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
