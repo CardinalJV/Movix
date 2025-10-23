@@ -49,7 +49,6 @@ struct PopularMovies: View {
               }
               .animation(.bouncy, value: self.showAllMovies)
             }
-
           }
         }
         Button {
