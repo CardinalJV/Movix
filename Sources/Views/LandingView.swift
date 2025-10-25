@@ -71,20 +71,18 @@ struct ContentView: View {
                                                 .bold()
                                                 .background(Color(red: 40/250, green: 40/250, blue: 40/250).opacity(0.75), in: RoundedRectangle(cornerRadius: 5))
                                             }
-//                                            NavigationLink(destination: {
-//                                                
-//                                            }, label: ) {
-//                                                
-//                                            } label: {
-//                                                HStack{
-//                                                    Text("Film les mieux notés")
-//                                                    Image(systemName: "star")
-//                                                }
-//                                                .frame(width: 350, height: 50)
-//                                                .bold()
-//                                                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5))
-//                                            }
-                                        }
+                                            NavigationLink(destination: {
+                                                
+                                            }, label: {
+                                                HStack{
+                                                    Text("Film les mieux notés")
+                                                    Image(systemName: "star")
+                                                }
+                                                .frame(width: 350, height: 50)
+                                                .bold()
+                                                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5))
+                                            }
+                                        )}
                                         /* - */
                                     }
                                     .padding()
@@ -99,7 +97,7 @@ struct ContentView: View {
                     }
                 }
                 /* Toolbar */
-                .toolbar{
+                .toolbar {
                     ToolbarItem(placement: .title) {
                         GlowingAnimation()
                     }
