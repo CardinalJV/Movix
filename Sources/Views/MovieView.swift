@@ -15,13 +15,14 @@ struct MovieView: View {
     
     @State private var movie: Movie? = nil
     
-    let id: Int
+    let targetId: Int
     
     var body: some View {
         GeometryReader{ geo in
             ScrollView{
                 VStack(spacing: 0){
                     if let movie = self.movie {
+                        /* Posters */
                         if let posterPath = movie.posterPath, let backdropPath = movie.backdropPath {
                             ZStack{
                                 ZStack{
@@ -44,7 +45,6 @@ struct MovieView: View {
                                                 Spacer()
                                             }
                                             .padding(10)
-                                            //                                            .border(.white)
                                         }
                                     /* - */
                                     /* Main poster */
@@ -58,17 +58,20 @@ struct MovieView: View {
                             }
                             .frame(width: geo.size.width, height: geo.size.height * 0.425, alignment: .top)
                         }
+                        /* - */
                         VStack(spacing: 10){
                             /* Title */
-                            Text(movie.title)
-                                .bold()
-                                .foregroundStyle(.white)
-                                .fontDesign(.rounded)
-                                .font(.title)
-                                .multilineTextAlignment(.center)
+                            if !movie.title.isEmpty {
+                                Text(movie.title)
+                                    .bold()
+                                    .foregroundStyle(.white)
+                                    .fontDesign(.rounded)
+                                    .font(.title)
+                                    .multilineTextAlignment(.center)
+                            }
                             /* - */
                             /* Genres */
-                            if let genres = movie.genres {
+                            if let genres = movie.genres, !genres.isEmpty {
                                 HStack{
                                     ForEach(genres) { genre in
                                         HStack(spacing: 0){
@@ -84,7 +87,7 @@ struct MovieView: View {
                             }
                             /* - */
                             /* SpokenLanguages */
-                            if let spokenLanguages = movie.spokenLanguages {
+                            if let spokenLanguages = movie.spokenLanguages, !spokenLanguages.isEmpty {
                                 HStack{
                                     ForEach(spokenLanguages) { language in
                                         Text(language.name)
@@ -100,75 +103,70 @@ struct MovieView: View {
                                 }
                             }
                             /* - */
+                            /* Rating */
+                            if let voteAverage = movie.voteAverage {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
+                                        .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
+                                        .blur(radius: 1)
+                                    HStack{
+                                        Text("Rating")
+                                        Spacer()
+                                        CircularProgressView(value: voteAverage)
+                                    }
+                                    .foregroundStyle(.white)
+                                    .padding()
+                                }
+                            }
+                            /* - */
                             /* Overview */
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
-                                    .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
-                                    .blur(radius: 1)
-                                if let overview = movie.overview {
+                            if let overview = movie.overview, !overview.isEmpty {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
+                                        .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
+                                        .blur(radius: 1)
                                     Text(overview)
                                         .padding()
                                         .cornerRadius(12)
                                         .foregroundStyle(.white)
                                         .font(.callout)
-                                } else {
-                                    Text("Overview not available")
-                                        .padding()
-                                        .cornerRadius(12)
-                                        .foregroundStyle(.white)
-                                        .font(.callout)
+                                    
                                 }
-                            }
-                            /* - */
-                            /* Rating */
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
-                                    .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
-                                    .blur(radius: 1)
-                                HStack{
-                                    Text("Rating")
-                                    Spacer()
-                                    if let voteAverage = movie.voteAverage {
-                                        CircularProgressView(value: voteAverage)
-                                    }
-                                }
-                                .foregroundStyle(.white)
-                                .padding()
                             }
                             /* - */
                             /* Runtime */
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
-                                    .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
-                                    .blur(radius: 1)
-                                HStack{
-                                    if let runtime = movie.runtime {
+                            if let runtime = movie.runtime {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
+                                        .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
+                                        .blur(radius: 1)
+                                    HStack{
                                         Text("Durée")
                                         Spacer()
                                         Text(String(runtime) + " minutes")
                                     }
+                                    .padding()
+                                    .foregroundStyle(.white)
+                                    .fontDesign(.rounded)
                                 }
-                                .padding()
-                                .foregroundStyle(.white)
-                                .fontDesign(.rounded)
                             }
                             /* - */
                             /* Production companies */
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
-                                    .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
-                                    .blur(radius: 1)
-                                HStack{
-                                    Text("Production companies")
-                                        .fontDesign(.rounded)
-                                        .foregroundStyle(.white)
-                                    Spacer()
-                                    VStack{
-                                        if let productionCompanies = movie.productionCompanies {
+                            if let productionCompanies = movie.productionCompanies, !productionCompanies.isEmpty {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
+                                        .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
+                                        .blur(radius: 1)
+                                    HStack{
+                                        Text("Production companies")
+                                            .fontDesign(.rounded)
+                                            .foregroundStyle(.white)
+                                        Spacer()
+                                        VStack{
                                             ForEach(productionCompanies) { company in
                                                 Text(company.name)
                                                     .fontDesign(.rounded)
@@ -176,29 +174,30 @@ struct MovieView: View {
                                             }
                                         }
                                     }
+                                    .padding()
                                 }
-                                .padding()
                             }
                             /* - */
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
-                                    .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
-                                    .blur(radius: 1)
-                                HStack{
-                                    Text("Budget")
-                                        .fontDesign(.rounded)
-                                        .foregroundStyle(.white)
-                                    Spacer()
-                                    if let budget = movie.budget {
+                            /* Budget */
+                            if let budget = movie.budget {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
+                                        .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
+                                        .blur(radius: 1)
+                                    HStack{
+                                        Text("Budget")
+                                            .fontDesign(.rounded)
+                                            .foregroundStyle(.white)
+                                        Spacer()
                                         Text("\(budget) $")
                                             .fontDesign(.rounded)
                                             .foregroundStyle(.white)
                                     }
-                                    
+                                    .padding()
                                 }
-                                .padding()
                             }
+                            /* - */
                         }
                         /* - */
                         .padding()
@@ -207,7 +206,7 @@ struct MovieView: View {
                 }
                 .navigationBarBackButtonHidden(true)
                 .task {
-                    if let movie = await moviesController.fetchMovie(byId: self.id) {
+                    if let movie = await moviesController.fetchMovie(byId: self.targetId) {
                         self.movie = movie
                     }
                 }
