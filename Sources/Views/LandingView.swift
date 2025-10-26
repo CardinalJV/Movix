@@ -71,10 +71,9 @@ struct ContentView: View {
                                                 .bold()
                                                 .background(Color(red: 40/250, green: 40/250, blue: 40/250).opacity(0.75), in: RoundedRectangle(cornerRadius: 5))
                                             }
-
-                                            NavigationLink(destination: {
+                                            NavigationLink {
                                                 TopRatedView()
-                                            }, label: {
+                                            } label: {
                                                 HStack{
                                                     Text("Film les mieux notés")
                                                     Image(systemName: "star")
@@ -83,7 +82,7 @@ struct ContentView: View {
                                                 .bold()
                                                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5))
                                             }
-                                        )}
+                                        }
                                         /* - */
                                     }
                                     .padding()
