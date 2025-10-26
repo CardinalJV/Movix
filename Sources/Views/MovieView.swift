@@ -30,22 +30,6 @@ struct MovieView: View {
                                     ImageLoader(imageUrl: backdropPath)
                                         .frame(width: geo.size.width, height: geo.size.height * 0.30)
                                         .opacity(0.75)
-                                        .overlay(alignment: .center){
-                                            HStack{
-                                                Button {
-                                                    dismiss()
-                                                } label: {
-                                                    Image(systemName: "xmark")
-                                                        .padding(8)
-                                                        .font(.title3)
-                                                        .bold()
-                                                        .foregroundStyle(.white)
-                                                        .background(Color(red: 40/250, green: 40/250, blue: 40/250), in: Circle())
-                                                }
-                                                Spacer()
-                                            }
-                                            .padding(10)
-                                        }
                                     /* - */
                                     /* Main poster */
                                     ImageLoader(imageUrl: posterPath)
@@ -55,8 +39,11 @@ struct MovieView: View {
                                     /* - */
                                 }
                                 .frame(width: geo.size.width, height: geo.size.height * 0.10)
+                                //                                .border(.green)
                             }
-                            .frame(width: geo.size.width, height: geo.size.height * 0.425, alignment: .top)
+                            .position(x: geo.size.width * 0.5, y: geo.size.height * -0.01)
+                            .frame(width: geo.size.width, height: geo.size.height * 0.375, alignment: .top)
+                            //                            .border(.red)
                         }
                         /* - */
                         VStack(spacing: 10){
@@ -132,7 +119,6 @@ struct MovieView: View {
                                         .cornerRadius(12)
                                         .foregroundStyle(.white)
                                         .font(.callout)
-                                    
                                 }
                             }
                             /* - */
@@ -204,17 +190,16 @@ struct MovieView: View {
                         /* - */
                     }
                 }
-                .navigationBarBackButtonHidden(true)
-                .task {
-                    if let movie = await moviesController.fetchMovie(byId: self.targetId) {
-                        self.movie = movie
-                    }
-                }
             }
             .background(content: {
                 Color(red: 40/250, green: 40/250, blue: 40/250)
                     .ignoresSafeArea(.all)
             })
+            .task {
+                if let movie = await moviesController.fetchMovie(byId: self.targetId) {
+                    self.movie = movie
+                }
+            }
         }
     }
 }
