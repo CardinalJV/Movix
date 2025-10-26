@@ -60,8 +60,8 @@ struct ContentView: View {
                                         /* - */
                                         /* Button */
                                         VStack{
-                                            Button {
-                                                
+                                            NavigationLink {
+                                                SearchMovieView()
                                             } label: {
                                                 HStack{
                                                     Text("Trouver mon film")
@@ -71,8 +71,9 @@ struct ContentView: View {
                                                 .bold()
                                                 .background(Color(red: 40/250, green: 40/250, blue: 40/250).opacity(0.75), in: RoundedRectangle(cornerRadius: 5))
                                             }
+
                                             NavigationLink(destination: {
-                                                
+                                                TopRatedView()
                                             }, label: {
                                                 HStack{
                                                     Text("Film les mieux notés")
