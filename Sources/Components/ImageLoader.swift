@@ -26,6 +26,7 @@ struct ImageLoader: View {
                         Text("Erreur lors du chargement de l'image")
                         Image(systemName: "xmark.circle")
                     }
+                    .tint(.red)
                 @unknown default:
                     EmptyView()
                 }
