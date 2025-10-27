@@ -17,10 +17,7 @@ struct GlowingAnimation: View {
                 .fill(AngularGradient(colors: [.red], center: .center, angle: .degrees(self.isAnimating ? 360 : 0)))
                 .frame(width: 75, height: 25)
                 .blur(radius: 40)
-//            RoundedRectangle(cornerRadius: 20)
-//                .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
-//                .frame(width: 125, height: 50)
-            HStack(spacing: -2){
+            HStack(spacing: 0){
                 HStack{
                     Image(systemName: "popcorn")
                         .font(.title3)
@@ -30,7 +27,8 @@ struct GlowingAnimation: View {
                 Text("ix")
                     .foregroundStyle(.white)
             }
-            .font(.custom("PermanentMarker-Regular", size: 28))
+            .font(.system(size: 30))
+            .fontDesign(.rounded)
             .bold()
         }
         .onAppear{
