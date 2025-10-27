@@ -173,16 +173,35 @@ struct MovieView: View {
                                         .blur(radius: 1)
                                     HStack{
                                         Text("Budget")
-                                            .fontDesign(.rounded)
-                                            .foregroundStyle(.white)
                                         Spacer()
                                         Text("\(budget) $")
-                                            .fontDesign(.rounded)
-                                            .foregroundStyle(.white)
                                     }
                                     .padding()
+                                    .fontDesign(.rounded)
+                                    .foregroundStyle(.white)
                                 }
                             }
+                            /* - */
+                            /* Web Site */
+                            if let homepage = movie.homepageURL {
+                                ZStack{
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
+                                        .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
+                                        .blur(radius: 1)
+                                    HStack{
+                                        Text("Release date")
+                                        Spacer()
+                                        Text("\(homepage.absoluteString)")
+                                            .multilineTextAlignment(.leading)
+                                    }
+                                    .padding()
+                                    .fontDesign(.rounded)
+                                    .foregroundStyle(.white)
+                                }
+                            }
+                            /* - */
+                            /* Youtube video */
                             /* - */
                         }
                         /* - */
