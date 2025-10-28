@@ -58,12 +58,14 @@ struct SearchMovieView: View {
                         .foregroundStyle(.white)
                         .fontDesign(.rounded)
                 } else {
-                    EmptyView()
+                    TypingAnimation(arrayOfText: ["Spider-Man", "Avengers", "Fury", "Fast and furious"])
                 }
             }
             .padding()
             /* - */
         }
+        .searchable(text: self.$query)
+        .font(.system(.body, design: .rounded))
         .task {
             await self.getSearchedMovies()
         }
@@ -72,7 +74,6 @@ struct SearchMovieView: View {
                 await self.getSearchedMovies()
             }
         }
-        .searchable(text: self.$query)
     }
 }
 
