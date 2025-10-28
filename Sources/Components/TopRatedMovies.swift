@@ -31,7 +31,6 @@ struct TopRatedMovies: View {
                                     .frame(height: 250)
                                     .clipShape(RoundedRectangle(cornerRadius: 5))
                             }
-                            //              .animation(.bouncy, value: self.showAllMovies)
                         }
                         
                     }
