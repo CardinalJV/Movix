@@ -47,14 +47,14 @@ struct ContentView: View {
                                                 Rectangle()
                                                     .frame(width: 50, height: 4)
                                                     .foregroundStyle(LinearGradient(colors: [.red, .white], startPoint: .leading, endPoint: .trailing))
-                                                Text("Plus jamais a court d'idées")
+                                                Text("Never run out of ideas again")
                                                     .foregroundStyle(.red)
                                                     .bold()
                                             }
-                                            Text("Le film parfait en quelques clics")
+                                            Text("The perfect movie in just a few clicks")
                                                 .font(.title)
                                                 .bold()
-                                            Text("Action, comédie, drame ou science-fiction ? Découvrez des films qui correspondent à vos envies du moment.")
+                                            Text("Action, comedy, drama, or science fiction? Discover films that match your current interests.")
                                                 .font(.title3)
                                         }
                                         /* - */
@@ -64,10 +64,12 @@ struct ContentView: View {
                                                 SearchMovieView()
                                             } label: {
                                                 HStack{
-                                                    Text("Trouver mon film")
+                                                    Text("Find my movie")
+                                                    Spacer()
                                                     Image(systemName: "magnifyingglass")
                                                 }
-                                                .frame(width: 350, height: 50)
+                                                .padding()
+                                                .frame(width: .infinity, height: 50)
                                                 .bold()
                                                 .background(Color(red: 40/250, green: 40/250, blue: 40/250).opacity(0.75), in: RoundedRectangle(cornerRadius: 5))
                                             }
@@ -75,10 +77,12 @@ struct ContentView: View {
                                                 TopRatedView()
                                             } label: {
                                                 HStack{
-                                                    Text("Film les mieux notés")
+                                                    Text("Top Rated Movies")
+                                                    Spacer()
                                                     Image(systemName: "star")
                                                 }
-                                                .frame(width: 350, height: 50)
+                                                .padding()
+                                                .frame(width: .infinity, height: 50)
                                                 .bold()
                                                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5))
                                             }
