@@ -6,3 +6,15 @@
 //
 
 import Foundation
+import TMDb
+
+extension Movie {
+    
+        func getFormattedBudget() -> String? {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            formatter.currencyCode = "USD"
+            return formatter.string(from: NSNumber(value: self.budget ?? 0)) ?? "N/A"
+    }
+    
+}
