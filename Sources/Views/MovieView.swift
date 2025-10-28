@@ -39,11 +39,9 @@ struct MovieView: View {
                                     /* - */
                                 }
                                 .frame(width: geo.size.width, height: geo.size.height * 0.10)
-                                //                                .border(.green)
                             }
                             .position(x: geo.size.width * 0.5, y: geo.size.height * -0.01)
                             .frame(width: geo.size.width, height: geo.size.height * 0.375, alignment: .top)
-                            //                            .border(.red)
                         }
                         /* - */
                         VStack(spacing: 10){
@@ -52,7 +50,6 @@ struct MovieView: View {
                                 Text(movie.title)
                                     .bold()
                                     .foregroundStyle(.white)
-                                    .fontDesign(.rounded)
                                     .font(.title)
                                     .multilineTextAlignment(.center)
                             }
@@ -70,7 +67,6 @@ struct MovieView: View {
                                     }
                                 }
                                 .foregroundStyle(.white)
-                                .fontDesign(.rounded)
                             }
                             /* - */
                             /* SpokenLanguages */
@@ -99,11 +95,12 @@ struct MovieView: View {
                                         .blur(radius: 1)
                                     HStack{
                                         Text("Rating")
+                                            .bold()
                                         Spacer()
                                         CircularProgressView(value: voteAverage)
                                     }
-                                    .foregroundStyle(.white)
                                     .padding()
+                                    .foregroundStyle(.white)
                                 }
                             }
                             /* - */
@@ -114,11 +111,14 @@ struct MovieView: View {
                                         .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
                                         .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
                                         .blur(radius: 1)
-                                    Text(overview)
-                                        .padding()
-                                        .cornerRadius(12)
-                                        .foregroundStyle(.white)
-                                        .font(.callout)
+                                    VStack(alignment: .leading, spacing: 10){
+                                        Text("Overview")
+                                            .bold()
+                                        Text(overview)
+                                            .font(.callout)
+                                    }
+                                    .padding()
+                                    .foregroundStyle(.white)
                                 }
                             }
                             /* - */
@@ -130,13 +130,13 @@ struct MovieView: View {
                                         .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
                                         .blur(radius: 1)
                                     HStack{
-                                        Text("Durée")
+                                        Text("Duration")
+                                            .bold()
                                         Spacer()
                                         Text(String(runtime) + " minutes")
                                     }
                                     .padding()
                                     .foregroundStyle(.white)
-                                    .fontDesign(.rounded)
                                 }
                             }
                             /* - */
@@ -149,23 +149,21 @@ struct MovieView: View {
                                         .blur(radius: 1)
                                     HStack{
                                         Text("Production companies")
-                                            .fontDesign(.rounded)
-                                            .foregroundStyle(.white)
+                                            .bold()
                                         Spacer()
                                         VStack{
                                             ForEach(productionCompanies) { company in
                                                 Text(company.name)
-                                                    .fontDesign(.rounded)
-                                                    .foregroundStyle(.white)
                                             }
                                         }
                                     }
                                     .padding()
+                                    .foregroundStyle(.white)
                                 }
                             }
                             /* - */
                             /* Budget */
-                            if let budget = movie.budget {
+                            if let budget = movie.getFormattedBudget() {
                                 ZStack{
                                     RoundedRectangle(cornerRadius: 15)
                                         .fill(Color(red: 40/250, green: 40/250, blue: 40/250))
@@ -173,8 +171,9 @@ struct MovieView: View {
                                         .blur(radius: 1)
                                     HStack{
                                         Text("Budget")
+                                            .bold()
                                         Spacer()
-                                        Text("\(budget) $")
+                                        Text(budget)
                                     }
                                     .padding()
                                     .fontDesign(.rounded)
@@ -191,6 +190,7 @@ struct MovieView: View {
                                         .blur(radius: 1)
                                     HStack{
                                         Text("Release date")
+                                            .bold()
                                         Spacer()
                                         Text("\(homepage.absoluteString)")
                                             .multilineTextAlignment(.leading)
@@ -220,6 +220,7 @@ struct MovieView: View {
                 }
             }
         }
+        .fontDesign(.rounded)
     }
 }
 
