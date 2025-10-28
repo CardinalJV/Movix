@@ -24,7 +24,7 @@ struct PopularMovies: View {
                 Rectangle()
                     .frame(width: 50, height: 4)
                     .foregroundStyle(LinearGradient(colors: [.red, .white], startPoint: .leading, endPoint: .trailing))
-                Text("Populaires")
+                Text("Popular")
                     .font(.largeTitle)
                     .foregroundStyle(.white)
                     .bold()
