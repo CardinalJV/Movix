@@ -11,6 +11,7 @@ import TMDb
 struct MovieView: View {
     
     @Environment(MoviesController.self) private var moviesController
+    @Environment(DataController.self) private var dataController
     @Environment(\.dismiss) private var dismiss
     
     @State private var movie: Movie? = nil
@@ -19,9 +20,9 @@ struct MovieView: View {
     
     var body: some View {
         GeometryReader{ geo in
-            ScrollView{
-                VStack(spacing: 0){
-                    if let movie = self.movie {
+            if let movie = self.movie {
+                ScrollView{
+                    VStack(spacing: 0){
                         /* Posters */
                         if let posterPath = movie.posterPath, let backdropPath = movie.backdropPath {
                             ZStack{
@@ -189,7 +190,7 @@ struct MovieView: View {
                                         .shadow(color: Color(red: 90/250, green: 90/250, blue: 90/250), radius: 25)
                                         .blur(radius: 1)
                                     HStack{
-                                        Text("Release date")
+                                        Text("Website")
                                             .bold()
                                         Spacer()
                                         Text("\(homepage.absoluteString)")
@@ -201,6 +202,8 @@ struct MovieView: View {
                                 }
                             }
                             /* - */
+                            /* Release date */
+                            /* - */
                             /* Youtube video */
                             /* - */
                         }
@@ -209,26 +212,40 @@ struct MovieView: View {
                         /* - */
                     }
                 }
-            }
-            .background(content: {
-                Color(red: 40/250, green: 40/250, blue: 40/250)
-                    .ignoresSafeArea(.all)
-            })
-            .task {
-                if let movie = await moviesController.fetchMovie(byId: self.targetId) {
-                    self.movie = movie
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            self.dataController.isInFavorites(movieId: movie.id) ? self.dataController.deleteToFavorite(movieId: movie.id) : self.dataController.addInFavorites(movie: movie)
+                        } label: {
+                            self.dataController.isInFavorites(movieId: movie.id) ?
+                            Image(systemName: "heart.fill") :
+                            Image(systemName: "heart")
+                        }
+                        .animation(.bouncy, value: self.dataController.favoriteMovies)
+                    }
                 }
+            } else {
+                ProgressView()
             }
         }
         .fontDesign(.rounded)
+        .background(content: {
+            Color(red: 40/250, green: 40/250, blue: 40/250)
+                .ignoresSafeArea(.all)
+        })
+        .task {
+            if let movie = await moviesController.fetchMovie(byId: self.targetId) {
+                self.movie = movie
+            }
+        }
     }
 }
-
-#Preview {
-    
-    @Previewable var moviesController = MoviesController()
-    
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
-        .environment(moviesController)
-}
+//
+//#Preview {
+//
+//    @Previewable var moviesController = MoviesController()
+//
+//    ContentView()
+//        .modelContainer(for: DataItem.self, inMemory: true)
+//        .environment(moviesController)
+//}
