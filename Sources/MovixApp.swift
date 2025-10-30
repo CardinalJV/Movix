@@ -10,14 +10,16 @@ import SwiftData
 
 @main
 struct MovixApp: App {
-  
-  @State private var moviesController = MoviesController()
-  
+    
+    @State private var moviesController = MoviesController()
+    @State private var dataController = DataController()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-            .environment(moviesController)
+                .environment(moviesController)
+                .environment(dataController)
         }
-        .modelContainer(for: Item.self)
+        .modelContainer(for: DataItem.self)
     }
 }
