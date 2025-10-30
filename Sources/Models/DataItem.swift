@@ -9,6 +9,11 @@ import Foundation
 import SwiftData
 
 @Model
-final class dataItem {
+final class DataItem: Identifiable {
+    var id = UUID()
+    var targetId: Int
     
+    init(targetId: Int) {
+        self.targetId = targetId
+    }
 }
