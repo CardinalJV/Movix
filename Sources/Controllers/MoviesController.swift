@@ -14,6 +14,7 @@ class MoviesController {
     var moviesListsItems: [MovieListItem] = []
     var genres: [Genre] = []
     var posters: [URL] = []
+//    var favoriteMovies: [Movie] = []
     
     private let apiKey = "b5d8017e240d54c376f083183218e549"
     private let client = TMDbClient(apiKey: "b5d8017e240d54c376f083183218e549")
