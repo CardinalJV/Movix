@@ -24,7 +24,7 @@ struct PopularMovies: View {
                 Rectangle()
                     .frame(width: 50, height: 4)
                     .foregroundStyle(LinearGradient(colors: [.red, .white], startPoint: .leading, endPoint: .trailing))
-                Text("Popular")
+                Text("Populars")
                     .font(.largeTitle)
                     .foregroundStyle(.white)
                     .bold()
@@ -89,6 +89,6 @@ struct PopularMovies: View {
     @Previewable var moviesController = MoviesController()
     
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: DataItem.self, inMemory: true)
         .environment(moviesController)
 }
