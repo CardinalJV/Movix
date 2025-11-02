@@ -88,7 +88,7 @@ struct PopularMovies: View {
     
     @Previewable var moviesController = MoviesController()
     
-    ContentView()
+    LandingView()
         .modelContainer(for: DataItem.self, inMemory: true)
         .environment(moviesController)
 }
