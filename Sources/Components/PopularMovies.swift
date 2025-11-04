@@ -33,10 +33,10 @@ struct PopularMovies: View {
             /* - */
             /* Popular grid movies */
             if !self.popularMovies.isEmpty {
-                LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)], spacing: 15){
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)], spacing: 15) {
                     ForEach(self.popularMovies.prefix(self.showAllMovies ? self.popularMovies.count : 10)) { popularMovie in
                         NavigationLink {
-                            MovieView(targetId: popularMovie.id)
+                            MovieView(tmdbId: popularMovie.id)
                                 .navigationTransition(.zoom(sourceID: "zoom", in: self.namespace))
                         } label: {
                             VStack{
@@ -76,19 +76,10 @@ struct PopularMovies: View {
         .frame(width: 350)
         /* Task */
         .task {
-            if let movies = await moviesController.fetchPopularMovies() {
+            if let movies = await self.moviesController.fetchPopularMovies() {
                 self.popularMovies = movies
             }
         }
         /* - */
     }
-}
-
-#Preview {
-    
-    @Previewable var moviesController = MoviesController()
-    
-    LandingView()
-        .modelContainer(for: DataItem.self, inMemory: true)
-        .environment(moviesController)
 }
