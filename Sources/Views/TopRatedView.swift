@@ -12,7 +12,7 @@ struct TopRatedView: View {
     
     var body: some View {
         ZStack{
-            Color(red: 40/250, green: 40/250, blue: 40/250)
+            MovixTheme.background
                 .ignoresSafeArea(.all)
             ScrollView{
                 /* Header */
@@ -22,7 +22,7 @@ struct TopRatedView: View {
                         .foregroundStyle(LinearGradient(colors: [.red, .white], startPoint: .leading, endPoint: .trailing))
                     Text("Top rated")
                         .font(.largeTitle)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(MovixTheme.primaryText)
                         .bold()
                 }
                 .frame(width: 350, alignment: .leading)

@@ -32,8 +32,8 @@ struct Posters: View {
                                         .padding(8)
                                         .font(.title3)
                                         .bold()
-                                        .foregroundStyle(.white)
-                                        .background(Color(red: 40/250, green: 40/250, blue: 40/250), in: Circle())
+                                        .foregroundStyle(.primary)
+                                        .movixGlass(cornerRadius: 20.0, interactive: true)
                                 }
                                 Spacer()
                             }

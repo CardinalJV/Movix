@@ -15,20 +15,11 @@ struct GlowingAnimation: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20, style: .continuous)
                 .fill(AngularGradient(colors: [.red], center: .center, angle: .degrees(self.isAnimating ? 360 : 0)))
-                .frame(width: 75, height: 25)
-                .blur(radius: 40)
-            HStack(spacing: 0){
-                HStack{
-                    Image(systemName: "popcorn")
-                        .font(.title3)
-                    Text("Mov")
-                }
-                .foregroundStyle(.red)
-                Text("ix")
-                    .foregroundStyle(.white)
-            }
-            .font(.system(size: 30))
-            .fontDesign(.rounded)
+                .frame(width: 34, height: 24)
+                .blur(radius: 18)
+            Image(systemName: "popcorn")
+                .font(.system(size: 20))
+                .foregroundStyle(MovixTheme.accent)
             .bold()
         }
         .onAppear{

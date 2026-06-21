@@ -16,7 +16,7 @@ struct FavoritesView: View {
     
     var body: some View {
         ZStack{
-            Color(red: 40/250, green: 40/250, blue: 40/250)
+            MovixTheme.background
                 .ignoresSafeArea(.all)
             ScrollView{
                 VStack(alignment: .leading, spacing: 15){
@@ -27,7 +27,7 @@ struct FavoritesView: View {
                             .foregroundStyle(LinearGradient(colors: [.red, .white], startPoint: .leading, endPoint: .trailing))
                         Text("Favorites")
                             .font(.largeTitle)
-                            .foregroundStyle(.white)
+                            .foregroundStyle(MovixTheme.primaryText)
                             .bold()
                     }
                     /* - */
@@ -39,14 +39,17 @@ struct FavoritesView: View {
                                     .navigationTransition(.zoom(sourceID: "zoom", in: self.namespace))
                             } label: {
                                 VStack{
-                                    ImageLoader(imageUrl: favoriteMovie.posterPath)
+                                    ImageLoader(imageUrl: favoriteMovie.posterPath ?? favoriteMovie.backdropPath)
                                         .scaledToFit()
                                         .frame(height: 250)
-                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        .movixGlass(cornerRadius: 8.0, interactive: true)
                                 }
                             }
+                            .transition(.scale(scale: 0.92).combined(with: .opacity))
                         }
                     }
+                    .animation(.bouncy(duration: 0.55), value: self.dataController.favoriteMovies.count)
                     /* - */
                 }
                 .frame(width: 350)
@@ -55,8 +58,8 @@ struct FavoritesView: View {
             .padding()
         }
         .tint(.red)
-        .onAppear{
-            self.dataController.fetchData()
+        .task {
+            await self.dataController.loadFavoriteMovies(using: self.moviesController)
         }
     }
 }

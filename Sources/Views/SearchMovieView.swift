@@ -17,54 +17,75 @@ struct SearchMovieView: View {
     @State private var query: String = ""
     @State private var searchedMovies: [MovieListItem] = []
     
+    private var trimmedQuery: String {
+        self.query.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     private func getSearchedMovies() async {
-        guard !self.query.trimmingCharacters(in: .whitespaces).isEmpty else {
-            self.searchedMovies = []
+        guard !self.trimmedQuery.isEmpty else {
+            withAnimation(.bouncy(duration: 0.35)) {
+                self.searchedMovies = []
+            }
             return
         }
         
-        if let movies = await self.moviesController.fetchMovieByName(name: self.query) {
-            self.searchedMovies = movies
+        if let movies = await self.moviesController.fetchMovieByName(name: self.trimmedQuery) {
+            withAnimation(.bouncy(duration: 0.55)) {
+                self.searchedMovies = movies
+            }
         }
     }
     
     var body: some View {
-        ZStack{
-            Color(red: 40/250, green: 40/250, blue: 40/250)
-                .ignoresSafeArea(.all)
-            /* SerachedMovies grid */
-            VStack(spacing: 20){
-                if !self.searchedMovies.isEmpty {
-                    ScrollView{
-                        LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)], spacing: 15){
+        ZStack {
+            MovixTheme.background
+                .ignoresSafeArea()
+            
+            if self.trimmedQuery.isEmpty {
+                VStack(spacing: 8.0) {
+                    Text("Type something below to search for a movie")
+                    Image(systemName: "arrow.down")
+                }
+                .font(.callout)
+                .foregroundStyle(MovixTheme.secondaryText)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ScrollView {
+                    VStack(spacing: 20.0) {
+                        if !self.searchedMovies.isEmpty {
+                        LazyVGrid(columns: [
+                            GridItem(.flexible(), spacing: 15),
+                            GridItem(.flexible(), spacing: 15)
+                        ], spacing: 15) {
                             ForEach(self.searchedMovies.prefix(10)) { searchedMovie in
                                 NavigationLink {
                                     MovieView(targetId: searchedMovie.id)
                                         .navigationTransition(.zoom(sourceID: "zoom", in: self.namespace))
                                 } label: {
-                                    VStack{
-                                        ImageLoader(imageUrl: searchedMovie.posterPath)
-                                            .scaledToFit()
-                                            .frame(height: 250)
-                                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                                    }
+                                    ImageLoader(imageUrl: searchedMovie.posterPath ?? searchedMovie.backdropPath)
+                                        .scaledToFit()
+                                        .frame(height: 250)
+                                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                                        .movixGlass(cornerRadius: 8.0, interactive: true)
                                 }
+                                .transition(.scale(scale: 0.92).combined(with: .opacity))
                             }
                         }
+                        .animation(.bouncy(duration: 0.55), value: self.searchedMovies.count)
+                    } else {
+                        Text("No movie found on the database")
+                            .foregroundStyle(MovixTheme.secondaryText)
+                            .fontDesign(.rounded)
                     }
-                    Spacer()
-                } else if !self.query.isEmpty {
-                    Text("No movie found on the database")
-                        .foregroundStyle(.white)
-                        .fontDesign(.rounded)
-                } else {
-                    TypingAnimation(arrayOfText: ["Spider-Man", "Avengers", "Fury", "Fast and furious"])
+                    }
+                    .frame(width: 350)
+                    .padding(.vertical)
                 }
             }
-            .padding()
-            /* - */
         }
-        .searchable(text: self.$query)
+        .searchable(text: self.$query, placement: .toolbar, prompt: "Search movie")
+        .searchPresentationToolbarBehavior(.avoidHidingContent)
         .font(.system(.body, design: .rounded))
         .task {
             await self.getSearchedMovies()

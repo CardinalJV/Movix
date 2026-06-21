@@ -55,9 +55,11 @@ class MoviesController {
     }
     
     private func getPostersForLandingView() {
+        self.posters = []
+        
         for item in self.moviesListsItems {
-            if let posterPath = item.posterPath {
-                self.posters.append(posterPath)
+            if let imagePath = item.posterPath ?? item.backdropPath {
+                self.posters.append(imagePath)
             }
         }
     }
@@ -81,6 +83,32 @@ class MoviesController {
             ).results
         } catch {
             print("Error during fetching top rated movies: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func fetchMovieTrailerURL(byId id: Int) async -> URL? {
+        do {
+            let videos = try await self.client.movies.videos(forMovie: id)
+            let youtubeVideos = videos.results.filter { $0.site == "YouTube" }
+            let trailer = youtubeVideos.first { $0.type == .trailer } ?? youtubeVideos.first { $0.type == .teaser }
+            
+            guard let trailer else {
+                return nil
+            }
+            
+            return URL(string: "https://www.youtube.com/watch?v=\(trailer.key)")
+        } catch {
+            print("Error during fetching movie trailer: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
+    func fetchMovieWatchProviders(byId id: Int, country: String) async -> ShowWatchProvider? {
+        do {
+            return try await self.client.movies.watchProviders(forMovie: id, country: country)
+        } catch {
+            print("Error during fetching movie watch providers: \(error.localizedDescription)")
             return nil
         }
     }
@@ -114,4 +142,3 @@ class MoviesController {
     //  }
     
 }
-

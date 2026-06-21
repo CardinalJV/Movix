@@ -26,23 +26,29 @@ struct TopRatedMovies: View {
                                 .navigationTransition(.zoom(sourceID: "zoom", in: self.namespace))
                         } label: {
                             VStack{
-                                ImageLoader(imageUrl: topRatedMovie.posterPath)
+                                ImageLoader(imageUrl: topRatedMovie.posterPath ?? topRatedMovie.backdropPath)
                                     .scaledToFit()
                                     .frame(height: 250)
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .movixGlass(cornerRadius: 8.0, interactive: true)
                             }
                         }
+                        .transition(.scale(scale: 0.92).combined(with: .opacity))
                         
                     }
                 }
+                .animation(.bouncy(duration: 0.55), value: self.topRatedMovies.count)
             } else {
                 Text("No movie found on the database")
+                    .foregroundStyle(MovixTheme.secondaryText)
             }
         }
         .frame(width: 350)
         .task {
             if let movies = await self.moviesController.fetchTopRatedMovies() {
-                self.topRatedMovies = movies
+                withAnimation(.bouncy(duration: 0.55)) {
+                    self.topRatedMovies = movies
+                }
             }
         }
     }

@@ -30,7 +30,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack{
                 ZStack{
-                    Color(red: 40/250, green: 40/250, blue: 40/250)
+                    MovixTheme.background
                         .ignoresSafeArea(.all)
                     ScrollView{
                         VStack(spacing: 30){
@@ -40,29 +40,29 @@ struct ContentView: View {
                             } else {
                                 ImageLoader(imageUrl: moviesController.posters[self.index])
                                     .scaledToFit()
-                                    .opacity(0.25)
                                     .overlay(alignment: .center){
-                                        VStack(spacing: 10){
+                                        VStack(spacing: 18){
                                             /* Text */
-                                            VStack(alignment: .leading){
+                                            VStack(alignment: .leading, spacing: 8){
                                                 HStack{
                                                     Rectangle()
                                                         .frame(width: 50, height: 4)
                                                         .foregroundStyle(LinearGradient(colors: [.red, .white], startPoint: .leading, endPoint: .trailing))
                                                     Text("Never run out of ideas again")
-                                                        .foregroundStyle(.red)
+                                                        .foregroundStyle(MovixTheme.accent)
                                                         .bold()
                                                 }
                                                 Text("The perfect movie in just a few clicks")
-                                                    .font(.title)
+                                                    .font(.title2)
                                                     .bold()
                                                 Text("Action, comedy, drama, or science fiction? Discover films that match your current interests.")
-                                                    .font(.title3)
+                                                    .font(.callout)
+                                                    .foregroundStyle(MovixTheme.secondaryText)
+                                                    .lineSpacing(3)
                                             }
-                                            .padding(1)
                                             /* - */
                                             /* Button */
-                                            VStack{
+                                            VStack(spacing: 10){
                                                 NavigationLink {
                                                     SearchMovieView()
                                                 } label: {
@@ -72,9 +72,10 @@ struct ContentView: View {
                                                         Image(systemName: "magnifyingglass")
                                                     }
                                                     .padding()
-                                                    .frame(width: .infinity, height: 50)
+                                                    .frame(maxWidth: .infinity, minHeight: 50)
                                                     .bold()
-                                                    .background(Color(red: 40/250, green: 40/250, blue: 40/250).opacity(0.75), in: RoundedRectangle(cornerRadius: 5))
+                                                    .foregroundStyle(.white)
+                                                    .movixProminentGlass(cornerRadius: 12.0, interactive: true)
                                                 }
                                                 NavigationLink {
                                                     TopRatedView()
@@ -82,19 +83,21 @@ struct ContentView: View {
                                                     HStack{
                                                         Text("Top Rated Movies")
                                                         Spacer()
-                                                        Image(systemName: "star")
+                                                        Image(systemName: "star.fill")
                                                     }
                                                     .padding()
-                                                    .frame(width: .infinity, height: 50)
+                                                    .frame(maxWidth: .infinity, minHeight: 50)
                                                     .bold()
-                                                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 5))
+                                                    .movixGlass(cornerRadius: 12.0, interactive: true)
                                                 }
                                             }
                                             .padding(5)
                                             /* - */
                                         }
-                                        .padding()
-                                        .foregroundStyle(.white)
+                                        .padding(20)
+                                        .foregroundStyle(.primary)
+                                        .movixClearGlass(cornerRadius: 20.0)
+                                        .padding(.horizontal, 16.0)
                                     }
                             }
                             /* - */
@@ -108,6 +111,8 @@ struct ContentView: View {
                     .toolbar {
                         ToolbarItem(placement: .title) {
                             GlowingAnimation()
+                                .padding(.horizontal, 12.0)
+                                .padding(.vertical, 6.0)
                         }
                         .sharedBackgroundVisibility(.hidden)
                         ToolbarItem(placement: .topBarTrailing) {
@@ -115,31 +120,23 @@ struct ContentView: View {
                                 FavoritesView()
                             } label: {
                                 Image(systemName: "heart.fill")
-                                    .font(.title3)
                                     .foregroundStyle(.red)
                                     .bold()
                             }
                         }
-                        .sharedBackgroundVisibility(.hidden)
                     }
                     .toolbarTitleDisplayMode(.inline)
                     /* - */
                     .onAppear{
                         self.startCarroussel()
-                        self.dataController.context = self.context
+                        self.dataController.configure(context: self.context)
                     }
                     .onDisappear{
                         self.stopCaroussel()
                     }
                     .task {
                         await moviesController.fetchMoviesListsItems(page: 1)
-                        if self.dataController.context != nil {
-                            for item in self.dataController.dataItems {
-                                if let movie = await self.moviesController.fetchMovie(byId: item.targetId ) {
-                                    self.dataController.favoriteMovies.append(movie)
-                                }
-                            }
-                        }
+                        await self.dataController.loadFavoriteMovies(using: self.moviesController)
                     }
                 }
         }

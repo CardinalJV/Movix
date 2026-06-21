@@ -26,7 +26,7 @@ struct PopularMovies: View {
                     .foregroundStyle(LinearGradient(colors: [.red, .white], startPoint: .leading, endPoint: .trailing))
                 Text("Populars")
                     .font(.largeTitle)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(MovixTheme.primaryText)
                     .bold()
             }
             .frame(width: 350, alignment: .leading)
@@ -36,37 +36,44 @@ struct PopularMovies: View {
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)], spacing: 15) {
                     ForEach(self.popularMovies.prefix(self.showAllMovies ? self.popularMovies.count : 10)) { popularMovie in
                         NavigationLink {
-                            MovieView(tmdbId: popularMovie.id)
+                            MovieView(targetId: popularMovie.id)
                                 .navigationTransition(.zoom(sourceID: "zoom", in: self.namespace))
                         } label: {
                             VStack{
-                                ImageLoader(imageUrl: popularMovie.posterPath)
+                                ImageLoader(imageUrl: popularMovie.posterPath ?? popularMovie.backdropPath)
                                     .scaledToFit()
                                     .frame(height: 250)
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .movixGlass(cornerRadius: 8.0, interactive: true)
                             }
                         }
+                        .transition(.scale(scale: 0.92).combined(with: .opacity))
                     }
                 }
+                .animation(.bouncy(duration: 0.55), value: self.popularMovies.count)
+                .animation(.bouncy(duration: 0.55), value: self.showAllMovies)
                 Button {
-                    self.showAllMovies.toggle()
+                    withAnimation(.bouncy(duration: 0.55)) {
+                        self.showAllMovies.toggle()
+                    }
                 } label: {
                     HStack{
                         Image(systemName: (self.showAllMovies ? "arrow.up.square.fill" : "arrow.down.square.fill"))
                             .tint(.white)
                             .bold()
-                            .animation(.bouncy, value: self.showAllMovies)
+                            .contentTransition(.symbolEffect(.replace))
                         Text(self.showAllMovies ? "Voir moins" : "Voir plus")
                             .bold()
                             .foregroundStyle(.white)
+                            .contentTransition(.opacity)
                         Image(systemName: (self.showAllMovies ? "arrow.up.square.fill" : "arrow.down.square.fill"))
                             .tint(.white)
                             .bold()
-                            .animation(.bouncy, value: self.showAllMovies)
+                            .contentTransition(.symbolEffect(.replace))
                         
                     }
                     .frame(width: 350, height: 50)
-                    .background(.red, in: RoundedRectangle(cornerRadius: 5))
+                    .movixProminentGlass(cornerRadius: 12.0, interactive: true)
                 }
             } else {
                 Text("No movie found on the database")
@@ -77,7 +84,9 @@ struct PopularMovies: View {
         /* Task */
         .task {
             if let movies = await self.moviesController.fetchPopularMovies() {
-                self.popularMovies = movies
+                withAnimation(.bouncy(duration: 0.55)) {
+                    self.popularMovies = movies
+                }
             }
         }
         /* - */
