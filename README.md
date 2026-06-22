@@ -12,3 +12,32 @@ A movie finder
 ## Screenrecord 
 
 https://github.com/user-attachments/assets/c405144f-d3dc-4a46-aadb-69c15c5092ce
+
+## Features
+
+- 🎬 Search for movies by title.
+
+- ⭐ Browse top-rated and popular movies.
+
+- 📖 View detailed movie information, including synopsis, ratings, release date, genres, and cast.
+
+- 📺 Check movie availability across streaming platforms.
+
+- ▶️ Watch official trailers directly on YouTube.
+
+- ❤️ Create and manage a personal watchlist.
+
+- 💾 Save movies locally using SwiftData for quick access.
+
+- 🔄 Modern and responsive user interface built with SwiftUI.
+
+## Technial details
+
+- Languages: Swift
+- Frameworks: SwiftUI / SwiftData / Swift Testing
+- Architecture: MVC
+- Version: 26
+
+## Credits
+
+All of the data comes from [TMDb](https://www.themoviedb.org).
