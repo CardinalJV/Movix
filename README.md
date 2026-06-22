@@ -7,7 +7,7 @@
 
 # Movix
 
-A movie finder
+A movie finder that uses TMDb api to get data movies.
 
 ## Screenrecord 
 
