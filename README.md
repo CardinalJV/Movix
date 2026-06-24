@@ -9,6 +9,10 @@
 
 A movie finder that uses TMDb api to get data movies.
 
+Why?
+
+Movix was created to help users discover what movies to watch. With so many streaming platforms available, it can be difficult to choose a movie and find where it is available to stream.
+
 ## Screenrecord 
 
 https://github.com/user-attachments/assets/ca03654f-0161-4474-b6f7-fb63e7432688
