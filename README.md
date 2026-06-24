@@ -11,7 +11,7 @@ A movie finder that uses TMDb api to get data movies.
 
 ## Screenrecord 
 
-https://github.com/user-attachments/assets/c405144f-d3dc-4a46-aadb-69c15c5092ce
+https://github.com/user-attachments/assets/ca03654f-0161-4474-b6f7-fb63e7432688
 
 ## Features
 
